@@ -1,0 +1,25 @@
+﻿<Window x:Class="Kinishka.mvvm.view.Registr"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kinishka.mvvm.view"
+        mc:Ignorable="d"
+        Title="Registr" Height="450" Width="800">
+    <Grid>
+        <TextBlock Text="Регистрация нового пользователя" FontSize="20" Margin="10"/>
+
+        <TextBlock Text="Логин:" VerticalAlignment="Top" Margin="194,180,-184,0"/>
+        <TextBox x:Name="txtName" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" Margin="338,180,0,0"/>
+
+        <TextBlock Text="Пароль:" VerticalAlignment="Top" Margin="194,219,-184,0"/>
+        <PasswordBox x:Name="txtPassword" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" Margin="338,219,0,0"/>
+
+        
+
+        <TextBlock Text="Роль" VerticalAlignment="Top" Margin="194,266,-184,0"/>
+        <TextBox x:Name="txtRole" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" Height="17" Margin="338,265,0,0" />
+
+        <Button Content="Зарегистрироваться" HorizontalAlignment="Center" Margin="0,305,0,67" Width="164" Click="RegisterButton_Click"/>
+    </Grid>
+</Window>

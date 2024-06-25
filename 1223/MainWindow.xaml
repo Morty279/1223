@@ -1,0 +1,25 @@
+﻿<Window x:Class="_1223.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_1223"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <TextBlock Text="Добро пожаловать в картотеку кинофильмов!" FontSize="20" Margin="10"/>
+
+
+        <Button Content="Зарегистрироваться" HorizontalAlignment="Left" Margin="422,284,0,99" Width="116" Click="BtnRegister_Click"/>
+
+        <TextBlock Text="Логин:" VerticalAlignment="Top" Margin="244,207,157,0"/>
+        <TextBox x:Name="txtName" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200"/>
+
+        <TextBlock Text="Пароль:" VerticalAlignment="Top" Margin="241,251,154,0"/>
+        <PasswordBox x:Name="txtPassword" VerticalAlignment="Top" HorizontalAlignment="Center" Width="200" Margin="0,251,0,0"/>
+
+        <Button Content="Войти" HorizontalAlignment="Left" Margin="265,284,0,99" Width="117" Click="BtnLogin_Click"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="599,335,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+
+    </Grid>
+</Window>
