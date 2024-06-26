@@ -45,26 +45,27 @@ namespace Kinishka.mvvm.view
                 return;
             }
 
-           
+
 
             // Создание нового соединения внутри блока using
-            using (MySqlConnection connection = MySqlDB.Instance.GetConnection())
-            {
-
-
-              
-                    connection.Open(); // Открытие подключения к базе данных
+           
+            
                 
-
 
                 try
                 {
-                        
+                          MySqlConnection connection = MySqlDB.Instance.GetConnection();
+                if (connection == null)
+                {
+                    return;
+                }
+                int ID = MySqlDB.Instance.GetAutoID("film");
                     
                     
-                    string query = "INSERT INTO film (Title, Regiser, Create, Filmgenre, Description, Price) VALUES (@Title, @Regiser, @Create, @Filmgenre, @Description, @Price)";
-                    MySqlCommand sqlCmd = new MySqlCommand(query, connection);
+                    string query = "INSERT INTO film  VALUES (0,@Title, @Regiser, @Create, @Filmgenre, @Description, @Price)";
+                using (MySqlCommand sqlCmd = new MySqlCommand(query, connection)) 
                     {
+                        sqlCmd.Parameters.AddWithValue("@ID", ID);
                         sqlCmd.Parameters.AddWithValue("@Title", title);
                         sqlCmd.Parameters.AddWithValue("@Regiser", regiser);
                         sqlCmd.Parameters.AddWithValue("@Create", create);
@@ -75,17 +76,14 @@ namespace Kinishka.mvvm.view
                     }
                     MessageBox.Show("Фильм создан успешно.");
                     
-                    /*else
-                    {
-                        MessageBox.Show("Соединение с базой данных не открыто.");
-                    }*/
+                   
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Ошибка при создании фильма: " + ex.Message);
                 }
                 // Блок finally не требуется, так как блок using автоматически закроет соединение
-            }
+           
             // Здесь код для обновления интерфейса или закрытия окна
         }
     }

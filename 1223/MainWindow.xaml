@@ -19,7 +19,7 @@
         <PasswordBox x:Name="txtPassword" VerticalAlignment="Top" HorizontalAlignment="Center" Width="200" Margin="0,251,0,0"/>
 
         <Button Content="Войти" HorizontalAlignment="Left" Margin="265,284,0,99" Width="117" Click="BtnLogin_Click"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="599,335,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+       
 
     </Grid>
 </Window>

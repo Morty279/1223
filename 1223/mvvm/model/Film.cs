@@ -14,7 +14,7 @@ namespace Kinishka.mvvm.model
         public string create { get; set; } = string.Empty;
         public string filmgenre { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public List<Tag> Tags { get; set; } = new();
     }
 

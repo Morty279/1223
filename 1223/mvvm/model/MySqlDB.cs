@@ -20,10 +20,10 @@ namespace Kinishka.mvvm.model
             
         }
 
-        public bool OpenConnection()
+        private bool OpenConnection()
         {
-            if (mySqlConnection.State == System.Data.ConnectionState.Open)
-                return true;
+            //if (mySqlConnection.State == System.Data.ConnectionState.Open)
+               // return true;
 
             try
             {
@@ -37,7 +37,7 @@ namespace Kinishka.mvvm.model
             }
         }
 
-        public void CloseConnection()
+       public void CloseConnection()
         {
             try
             {

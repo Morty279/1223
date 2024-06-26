@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Kinishka.mvvm.model
 {
-   /*  public class FilmRepository
+     public class FilmRepository
     {
         private FilmRepository()
         {
@@ -50,7 +50,7 @@ namespace Kinishka.mvvm.model
                         film.filmgenre = reader.GetString("filmgenre");
                         film.create = reader.GetString("create");
                         film.Description = reader.GetString("Description");
-                        film.Price = reader.GetDouble("Price");
+                        film.Price = reader.GetDecimal("Price");
 
                     }
                     Tag tag = new Tag
@@ -78,15 +78,15 @@ namespace Kinishka.mvvm.model
                 {
                     // Удаление связей фильма с тегами
                     string sql = "DELETE FROM FilmTag WHERE idfilm = @filmId;";
-                    using (var mc = new MySqlCommand(sql, connect))
+                    using (var mc = new MySqlCommand(sql, connect, transaction)) // Добавление транзакции к команде
                     {
                         mc.Parameters.AddWithValue("@filmId", film.ID);
                         mc.ExecuteNonQuery();
                     }
 
                     // Обновление информации о фильме
-                    sql = "UPDATE film SET Title = @title, regiser = @regiser, create = @create, filmgenre = @filmgenre, Description = @description, Price = @price WHERE Id = @filmId;";
-                    using (var mc = new MySqlCommand(sql, connect))
+                    sql = "UPDATE film SET Title = @title, Regiser = @regiser, `Create` = @create, Filmgenre = @filmgenre, Description = @description, Price = @price WHERE Id = @filmId;";
+                    using (var mc = new MySqlCommand(sql, connect, transaction)) // Добавление транзакции к команде
                     {
                         mc.Parameters.AddWithValue("@title", film.Title);
                         mc.Parameters.AddWithValue("@regiser", film.regiser);
@@ -102,7 +102,7 @@ namespace Kinishka.mvvm.model
                     foreach (var tag in film.Tags)
                     {
                         sql = "INSERT INTO FilmTag (idfilm, idtag) VALUES (@filmId, @tagId);";
-                        using (var mcCross = new MySqlCommand(sql, connect))
+                        using (var mcCross = new MySqlCommand(sql, connect, transaction)) // Добавление транзакции к команде
                         {
                             mcCross.Parameters.AddWithValue("@filmId", film.ID);
                             mcCross.Parameters.AddWithValue("@tagId", tag.ID);
@@ -119,6 +119,7 @@ namespace Kinishka.mvvm.model
                 }
             }
         }
+
 
         internal IEnumerable<Film> Search(string searchText, Tag selectedTag)
         {
@@ -174,5 +175,5 @@ namespace Kinishka.mvvm.model
                 }
             }
         }
-    }*/
+    }
 }

@@ -3,6 +3,7 @@ using Kinishka.mvvm.model;
 using MongoDB.Driver.Core.Configuration;
 using MySqlConnector;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -45,18 +46,21 @@ namespace Kinishka.mvvm.view
                 MessageBox.Show("Введите имя и пароль.");
                 return;
             }
-            using (MySqlConnection connection = MySqlDB.Instance.GetConnection())
+            try { 
+            /*using (MySqlConnection connection = MySqlDB.Instance.GetConnection())
             {
-                if (connection.State != System.Data.ConnectionState.Open)
-                {
-                    connection.Open(); // Открытие подключения к базе данных
-                }
+                
                 try
                 {
                
                     string query = "INSERT INTO login (Name, Password, Role) VALUES (@Name, @Password, @Role)";
-                    MySqlCommand sqlCmd = new MySqlCommand(query, connection);
-                    {
+                    MySqlCommand sqlCmd = new MySqlCommand(query, connection);*/
+            var connect = MySqlDB.Instance.GetConnection();
+            if (connect == null)
+                return;
+            string query = "INSERT INTO login (Name, Password, Role) VALUES (@Name, @Password, @Role)";
+            using (var sqlCmd = new MySqlCommand(query, connect))
+            {
                         // Добавление параметров запроса
                         sqlCmd.Parameters.AddWithValue("@Name", username);
                         sqlCmd.Parameters.AddWithValue("@Password", password);
@@ -77,13 +81,10 @@ namespace Kinishka.mvvm.view
                 {
                     MessageBox.Show("Ошибка: " + ex.Message); // Показ сообщения об ошибке
                 }
-                finally
-                {
-                    connection.Close(); // Явное закрытие соединения
-                }
+               
             }
            
         }
     }
-}
+
 

@@ -31,23 +31,33 @@ namespace Kinishka.mvvm.view
 
         private void FillData()
         {
-            using (MySqlConnection connection = MySqlDB.Instance.GetConnection())
+            try
             {
-                try
+
+
+                /*using (MySqlConnection connection = MySqlDB.Instance.GetConnection())
                 {
-                    connection.Open(); // Открытие соединения
-                    string query = "SELECT Title FROM film";
-                    MySqlDataAdapter sqlDataAdapter = new MySqlDataAdapter(query, connection);
-                    DataTable dataTable = new DataTable();
+                    try
+                    {
+
+                        string query = "SELECT Title FROM film";
+                        MySqlDataAdapter sqlDataAdapter = new MySqlDataAdapter(query, connection);*/
+                var connect = MySqlDB.Instance.GetConnection();
+                if (connect == null)
+                    return;
+                string query = "SELECT Title FROM film";
+                MySqlDataAdapter sqlDataAdapter = new MySqlDataAdapter(query, connect);
+                DataTable dataTable = new DataTable();
                     sqlDataAdapter.Fill(dataTable);
                     lstMovies.ItemsSource = dataTable.DefaultView;
                     lstMovies.DisplayMemberPath = "Title";
+                MySqlDB.Instance.CloseConnection();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
-            }
+            
         }
 
         private void lstMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -60,31 +70,76 @@ namespace Kinishka.mvvm.view
         private void ShowMovieDetails(string title)
         {
             // Обновленная строка подключения для MySQL
-            string connectionString = "Server=localhost; Database=kino;Uid=morty;Pwd=123654;";
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+
+            try
             {
-                try
+
+
+                /* using (MySqlConnection connection = new MySqlConnection(connectionString))
+                 {
+                     try
+                     {
+
+                         string query = "SELECT * FROM film WHERE Title=@Title";
+                         MySqlCommand sqlCommand = new MySqlCommand(query, connection);*/
+                /* var connect = MySqlDB.Instance.GetConnection();
+                 if (connect == null)
+                     return;*/
+                string query = $"SELECT * FROM film WHERE Title like '{title}';";
+                /* using (var sqlCommand = new MySqlCommand(query, connect))
+                 using (MySqlDataReader reader = sqlCommand.ExecuteReader())
+                 {*/
+                var result = new List<Film>();
+                var connect = MySqlDB.Instance.GetConnection();
+                if (connect == null)
+                    return;
+                using (var mc = new MySqlCommand(query, connect))
+                using (var reader = mc.ExecuteReader())
                 {
-                    connection.Open(); // Открытие соединения
-                    string query = "SELECT * FROM film WHERE Title=@title";
-                    MySqlCommand sqlCommand = new MySqlCommand(query, connection);
-                    sqlCommand.Parameters.AddWithValue("@title", title);
-                    MySqlDataReader reader = sqlCommand.ExecuteReader();
-                    if (reader.Read())
+                    Film film = null;
+                    int id;
+                    while (reader.Read())
                     {
-                        MessageBox.Show($"Название: {reader["Title"]}\nРежиссер: {reader["regiser"]}\nГод выпуска: {reader["create"]}\nЖанр: {reader["filmgenre"]}\nОписание: {reader["Description"]}\nЦена:{reader["Price"]}");
+                        id = reader.GetInt32("id");
+                        film = result.FirstOrDefault(s => s.ID == id);
+                        if (film == null)
+                        {
+                            film = new Film();
+                            result.Add(film);
+                            film.ID = id;
+                            film.Title = reader.GetString("Title");
+                            film.regiser = reader.GetString("regiser");
+                            film.filmgenre = reader.GetString("filmgenre");
+                            film.create = reader.GetString("create");
+                            film.Description = reader.GetString("Description");
+                            film.Price = reader.GetDecimal("Price");
+
+                        }
+
+                        {
+                            foreach (var item in result)
+
+                                MessageBox.Show($"Название: {item.Title}\nРежиссер: {item.regiser}\nГод выпуска: {item.create}\nЖанр: {item.filmgenre}\nОписание: {item.Description}\nЦена:{item.Price}");
+                        }
+
+                        //  sqlCommand.Parameters.AddWithValue("@Title", title);
+
+                        /*if (reader.Read())
+                        {
+                        }*/
+
+                        // }
                     }
-                    reader.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                finally
-                {
-                    connection.Close(); // Закрытие соединения
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
+
+     
     }
 }
+

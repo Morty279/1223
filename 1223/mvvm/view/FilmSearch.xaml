@@ -3,10 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Kinishka.mvvm.view"
+        xmlns:local="clr-namespace:Kinishka.mvvm.viewmodel"
         mc:Ignorable="d"
            Title="Список Фильмов" Height="450" Width="600">
-    <Grid>
+    <StackPanel>
         <ListBox x:Name="lstMovies" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="lstMovies_SelectionChanged"/>
-    </Grid>
+        
+    </StackPanel>
 </Window>

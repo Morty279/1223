@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Kinishka.mvvm.model
 {
-  /*  internal class TagsRepository
+    internal class TagsRepository
     {
         private TagsRepository()
         {
@@ -48,5 +48,5 @@ namespace Kinishka.mvvm.model
             }
             return result;
         }
-    }*/
+    }
 }
